@@ -6,53 +6,62 @@ import ru.frigesty.pages.RegistrationPage;
 public class PracticeFormTests extends TestBase {
 
     RegistrationPage registrationPage = new RegistrationPage();
+    GenerationData gData = new GenerationData();
 
     @Test
     void fullFillFormTest() {
 
         registrationPage.openPage()
-                        .setFirstName("Airat")
-                        .setLastName("Karimov")
-                        .setEmail("karimov@yandex.ru")
-                        .chooseGender("Male")
-                        .setMobileNumber("8900011111")
-                        .setBirthDate("2","August","2000")
-                        .setAndChooseSubject("Maths")
-                        .chooseHobbies("Sports")
-                        .uploadPicture("Duck.png")
-                        .setAddress("USA")
-                        .chooseStateAndCity("NCR","Delhi")
+                        .setFirstName(gData.firstName)
+                        .setLastName(gData.lastName)
+                        .setEmail(gData.userEmail)
+                        .chooseGender(gData.userGender)
+                        .setMobileNumber(gData.userNumber)
+                        .setBirthDate(gData.dayOfBirth, gData.monthOfBirth,gData.yearOfBirth)
+                        .setAndChooseSubject(gData.subject)
+                        .chooseHobbies(gData.hobbies)
+                        .uploadPicture(gData.pictures)
+                        .setAddress(gData.currentAddress)
+                        .chooseStateAndCity(gData.randomState, gData.randomCity)
                         .clickSubmit();
 
         registrationPage.verifyRegistrationResultsModalAppears()
-                        .verifyResult("Student Name","Airat Karimov")
-                        .verifyResult("Student Email","karimov@yandex.ru")
-                        .verifyResult("Gender","Male")
-                        .verifyResult("Mobile","8900011111")
-                        .verifyResult("Date of Birth","2 August,2000")
-                        .verifyResult("Subjects","Maths")
-                        .verifyResult("Hobbies","Sports")
-                        .verifyResult("Picture","Duck.png")
-                        .verifyResult("Address","USA")
-                        .verifyResult("State and City","NCR Delhi");
+                        .verifyResult("Student Name",gData.firstName + " " + gData.lastName)
+                        .verifyResult("Student Email",gData.userEmail)
+                        .verifyResult("Gender", gData.userGender)
+                        .verifyResult("Mobile",gData.userNumber)
+                        .verifyResult("Date of Birth",gData.dayOfBirth
+                                + " "
+                                + gData.monthOfBirth
+                                + ","
+                                + gData.yearOfBirth)
+                        .verifyResult("Subjects",gData.subject)
+                        .verifyResult("Hobbies",gData.hobbies)
+                        .verifyResult("Picture",gData.pictures)
+                        .verifyResult("Address",gData.currentAddress)
+                        .verifyResult("State and City",gData.randomState + " " + gData.randomCity);
     }
 
     @Test
     void minimalFillFormTest() {
 
         registrationPage.openPage()
-                        .setFirstName("Airat")
-                        .setLastName("Karimov")
-                        .chooseGender("Male")
-                        .setMobileNumber("8900011111")
-                        .setBirthDate("2", "August", "2000")
+                        .setFirstName(gData.firstName)
+                        .setLastName(gData.lastName)
+                        .chooseGender(gData.userGender)
+                        .setMobileNumber(gData.userNumber)
+                        .setBirthDate(gData.dayOfBirth, gData.monthOfBirth, gData.yearOfBirth)
                         .clickSubmit();
 
         registrationPage.verifyRegistrationResultsModalAppears()
-                        .verifyResult("Student Name", "Airat Karimov")
-                        .verifyResult("Gender", "Male")
-                        .verifyResult("Mobile", "8900011111")
-                        .verifyResult("Date of Birth", "2 August,2000");
+                        .verifyResult("Student Name",gData.firstName + " " + gData.lastName)
+                        .verifyResult("Gender", gData.userGender)
+                        .verifyResult("Mobile",gData.userNumber)
+                        .verifyResult("Date of Birth",gData.dayOfBirth
+                                + " "
+                                + gData.monthOfBirth
+                                + ","
+                                + gData.yearOfBirth);
     }
 
     @Test
@@ -63,8 +72,8 @@ public class PracticeFormTests extends TestBase {
                         .setLastName("")
                         .setEmail("invalid-email")
                         .setMobileNumber("LL00011111")
-                        .setBirthDate("2","August","2000")
-                        .setAddress("USA")
+                        .setBirthDate(gData.dayOfBirth, gData.monthOfBirth, gData.yearOfBirth)
+                        .setAddress(gData.currentAddress)
                         .clickSubmit();
 
         registrationPage.firstNameFieldInvalidationCheck()
