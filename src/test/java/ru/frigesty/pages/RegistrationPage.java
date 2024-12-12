@@ -29,9 +29,13 @@ public class RegistrationPage {
     CalendarComponent calendarComponent = new CalendarComponent();
     ModalComponent modalComponent = new ModalComponent();
 
-
     public RegistrationPage openPage() {
         open("/automation-practice-form");
+
+        return this;
+    }
+
+    public RegistrationPage removeBanners() {
         executeJavaScript("$('footer').remove()");
         executeJavaScript("$('#fixedban').remove()");
 
@@ -125,20 +129,20 @@ public class RegistrationPage {
     }
 
     public RegistrationPage firstNameFieldInvalidationCheck() {
-        $(firstNameInput).shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        firstNameInput.shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
 
 
         return this;
     }
 
     public RegistrationPage lasNameFieldInvalidationCheck() {
-        $(lastNameInput).shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        lastNameInput.shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
 
         return this;
     }
 
     public RegistrationPage userEmailFieldInvalidationCheck() {
-        $(userEmailInput).shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        userEmailInput.shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
 
         return this;
     }
@@ -151,9 +155,7 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage mobileNumberFieldInvalidationCheck() {
-        $(mobileNumberInput).shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-
-        return this;
+    public void mobileNumberFieldInvalidationCheck() {
+        mobileNumberInput.shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
     }
 }
