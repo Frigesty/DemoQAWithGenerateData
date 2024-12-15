@@ -2,11 +2,12 @@ package ru.frigesty.tests;
 
 import org.junit.jupiter.api.Test;
 import ru.frigesty.pages.RegistrationPage;
+import ru.frigesty.utils.TestDataGenerator;
 
 public class PracticeFormTests extends TestBase {
 
     RegistrationPage registrationPage = new RegistrationPage();
-    GenerationData gData = new GenerationData();
+    TestDataGenerator gData = new TestDataGenerator();
 
     @Test
     void fullFillFormTest() {

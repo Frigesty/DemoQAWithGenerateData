@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.closeWebDriver;
 public class TestBase {
 
     @BeforeAll
-    static void beforeAll() {
+    static void setUpBrowserConfiguration() {
 
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
@@ -17,7 +17,7 @@ public class TestBase {
     }
 
     @AfterAll
-    public static void afterAll() {
+    public static void tearDownWebDrive() {
         closeWebDriver();
     }
 }
