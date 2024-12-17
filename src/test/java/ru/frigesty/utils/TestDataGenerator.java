@@ -1,7 +1,8 @@
 package ru.frigesty.utils;
 
 import com.github.javafaker.Faker;
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Map;
 
 public class TestDataGenerator {
@@ -11,27 +12,36 @@ public class TestDataGenerator {
     public String userEmail;
     public String userGender;
     public String userNumber;
-    public String monthOfBirth;
     public String subject;
     public String hobbies;
     public String pictures;
     public String currentAddress;
     public String randomState;
-    public String  randomCity;
-    public int yearOfBirth;
+    public String randomCity;
+    public String monthOfBirth;
     public int dayOfBirth;
+    public int yearOfBirth;
 
     Faker faker = new Faker();
 
     public TestDataGenerator () {
+
+        java.util.Date birthDateObject = faker.date().birthday(20, 30);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM,yyyy", Locale.ENGLISH);
+        String formattedDate = sdf.format(birthDateObject);
+        String[] dateParts = formattedDate.split("\\s|,");
+        int day = Integer.parseInt(dateParts[0]);
+        String month = dateParts[1];
+        int year = Integer.parseInt(dateParts[2]);
+
         firstName = faker.name().firstName();
         lastName = faker.name().lastName();
         userEmail = faker.internet().emailAddress();
         userGender = faker.options().option(gender);
         userNumber = "89" + faker.phoneNumber().subscriberNumber(8);
-        monthOfBirth = faker.options().option(months);
-        yearOfBirth = faker.number().numberBetween(1901, 2023);
-        dayOfBirth = generateValidDay(monthOfBirth, yearOfBirth);
+        dayOfBirth = day;
+        monthOfBirth = month;
+        yearOfBirth = year;
         subject = faker.options().option(subjects);
         hobbies = faker.options().option(hobbyOptions);
         pictures = faker.options().option(morePictures);
@@ -39,9 +49,6 @@ public class TestDataGenerator {
         randomState = faker.options().option(stateCities.keySet().toArray(new String[0]));
         randomCity = getRandomCity(randomState);
     }
-
-    public static String[] months = {"January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"};
 
     public static String[] subjects = {"Accounting", "Maths", "Arts", "English", "Physics", "Chemistry",
             "Computer Science", "Economics", "Social Studies", "History", "Civics", "Commerce", "Hindi", "Biology"};
@@ -61,34 +68,6 @@ public class TestDataGenerator {
 
     public static String getRandomCity(String state) {
         String[] cities = stateCities.get(state);
-
         return new Faker().options().option(cities);
-    }
-
-    public static int getDaysInMonth(String month, int year) {
-        Map<String, Integer> monthDays = new HashMap<>();
-        monthDays.put("January", 31);
-        monthDays.put("February", isLeapYear(year) ? 29 : 28);
-        monthDays.put("March", 31);
-        monthDays.put("April", 30);
-        monthDays.put("May", 31);
-        monthDays.put("June", 30);
-        monthDays.put("July", 31);
-        monthDays.put("August", 31);
-        monthDays.put("September", 30);
-        monthDays.put("October", 31);
-        monthDays.put("November", 30);
-        monthDays.put("December", 31);
-
-        return monthDays.getOrDefault(month, 0);
-    }
-
-    private static boolean isLeapYear(int year) {
-        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-    }
-
-    private int generateValidDay(String month, int year) {
-        int daysInMonth = getDaysInMonth(month, year);
-        return faker.number().numberBetween(1, daysInMonth + 1);
     }
 }

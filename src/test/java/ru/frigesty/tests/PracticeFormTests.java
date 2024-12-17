@@ -19,7 +19,7 @@ public class PracticeFormTests extends TestBase {
                         .setEmail(gData.userEmail)
                         .chooseGender(gData.userGender)
                         .setMobileNumber(gData.userNumber)
-                        .setBirthDate(gData.dayOfBirth, gData.monthOfBirth,gData.yearOfBirth)
+                        .setBirthDate(gData.dayOfBirth, gData.monthOfBirth, gData.yearOfBirth)
                         .setAndChooseSubject(gData.subject)
                         .chooseHobbies(gData.hobbies)
                         .uploadPicture(gData.pictures)
@@ -32,11 +32,7 @@ public class PracticeFormTests extends TestBase {
                         .verifyResult("Student Email",gData.userEmail)
                         .verifyResult("Gender", gData.userGender)
                         .verifyResult("Mobile",gData.userNumber)
-                        .verifyResult("Date of Birth",gData.dayOfBirth
-                                + " "
-                                + gData.monthOfBirth
-                                + ","
-                                + gData.yearOfBirth)
+                        .verifyResult("Date of Birth", gData.dayOfBirth + " " + gData.monthOfBirth + "," +gData.yearOfBirth)
                         .verifyResult("Subjects",gData.subject)
                         .verifyResult("Hobbies",gData.hobbies)
                         .verifyResult("Picture",gData.pictures)
